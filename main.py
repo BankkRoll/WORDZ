@@ -82,7 +82,7 @@ async def on_message(message):
 
     if message.author == client.user:
         return
-    if "<@`bot_user_id`>" in message.content:
+    if "<@bot_user_id>" in message.content:
         welcome = f"""**__👋 I'm WORDZ!__**
       
 I'll let you play a game like wordle all inside discord!
