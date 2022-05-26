@@ -82,6 +82,15 @@ async def on_message(message):
 
     if message.author == client.user:
         return
+    if "<@`bot_user_id`>" in message.content:
+        welcome = f"""**__👋 I'm WORDZ!__**
+      
+I'll let you play a game like wordle all inside discord!
+      
+Use `{prefix}help` to get my commands. 
+"""
+        await message.channel.send(welcome)
+        pass
     if message.content.startswith(prefix + 'help'):
         help = f"""
 **Commands listed below** 
