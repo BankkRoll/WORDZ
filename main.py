@@ -5,7 +5,7 @@ import discord
 
 
 bot_token = os.environ['bot_token']
-client = discord.Client()
+prefix ='w?'
 
 word_list = []
 global vocab, name_list, mode, leaderboard
@@ -29,6 +29,7 @@ game = False
 word = random.choice(word_list)
 print(word)
 
+client = discord.Client()
 
 
 def check(guess, actual_word):
@@ -71,6 +72,7 @@ def reset_vars():
 
 @client.event
 async def on_ready():
+    await client.change_presence(activity=discord.Game("Playing wordle in " + str(len(client.guilds)) + " servers!"))
     print(f'{client.user} has connected to Discord!')
 
 
@@ -80,49 +82,53 @@ async def on_message(message):
 
     if message.author == client.user:
         return
-    if message.content.startswith('w?help'):
-      
-        await message.channel.send("**Commands listed below** ")
-        await message.channel.send("`w?info` - Get info about the bot.")
-        await message.channel.send("`w?wordz` - Play a solo game of ***WORDZ***! ")
-        await message.channel.send("`w?wordzwar` - Play a mutiplayer game!(use `w?add @user` to add players) ")
-        await message.channel.send("`w?guess _____` - Guess your entry. ")
-        await message.channel.send("`w?end` - End game and view leaderboards. ")
+    if message.content.startswith(prefix + 'help'):
+        help = f"""
+**Commands listed below** 
+`w?info` - Get info about the bot.
+`w?wordz` - Play a solo game of ***WORDZ***! 
+`w?wordzwar` - Play a mutiplayer game!(use `w?add @user` to add players) 
+`w?guess _____` - Guess your entry. 
+`w?end` - End game and view leaderboards.
+"""
+        await message.channel.send(help)
+        pass
 
 
-    if message.content.startswith('w?invite'):
+    if message.content.startswith(prefix + 'invite'):
+        invite = f"""
+**Thanks for your interest in adding @WORDZ#0587 to your server!** 
+Please view my profile and select `ADD TO SERVER`.
+"""
+        await message.channel.send(invite)
 
-        await message.channel.send("**Thanks for your interest in adding @WORDZ#0587 to your server!** ")
-        await message.channel.send("Please view my profile and select `ADD TO SERVER`. ")
-        
 
 
-
-    if message.content.startswith('w?info'):
-        
-        await message.channel.send("**Thanks for using!**")
-        await message.channel.send("**Developed & Hosted by:** BankkRoll.ETH#0573")
-        await message.channel.send("**Pricing?:** **Free!!** *Buy me a coffee* to help hosting costs, greatly appreciated but not required, thanks!")
-        await message.channel.send("**Buy me a coffee!:** **ETH**- 0x19C6f06D3ca908F1B276c13e0e0166bD830D992c ")
-        await message.channel.send("**Invite me by viewing my @WORDZ#0587 profile, select `ADD TO SERVER`.**")
-        await message.channel.send("**Contact:** https://twitter.com/bankkroll_eth ")
-        
-
+    if message.content.startswith(prefix + 'info'):
+        info = f"""
+**Thanks for using!**
+**Developed & Hosted by:** BankkRoll.ETH#0573")
+**Pricing?:** **Free!!** *Buy me a coffee* to help hosting costs, greatly appreciated but not required, thanks!
+**Buy me a coffee!:** **ETH**- 0x19C6f06D3ca908F1B276c13e0e0166bD830D992c 
+**Invite me by viewing my @WORDZ#0587 profile, select `ADD TO SERVER`.**")
+**Contact:** https://twitter.com/bankkroll_eth 
+"""
+        await message.channel.send(info)
+        pass
      
   
-    if message.content.startswith('w?wordz'):
+    if message.content.startswith(prefix + 'wordz'):
         game = True
-        await message.channel.send("*To play multiplayer, use `w?wordzwar` *")
-        await message.channel.send("**WORDZ is starting...** ")
-        await message.channel.send("**3...**")
-        await message.channel.send("**2..**")
-        await message.channel.send("**1.**")
-        await message.channel.send("**Please start with your first guess below `w?guess _____` **")
-
-
+        wordz = f"""
+*To play multiplayer, use `w?wordzwar` *
+**WORDZ is picking a word...**
+**Please start with your first guess below `w?guess _____` **
+"""
+        await message.channel.send(wordz)
+        pass
 
   
-    if message.content.startswith('w?guess'):
+    if message.content.startswith(prefix + 'guess'):
         if game:
             if mode == "singleplayer":
                 test_word = message.content.replace("w?guess ", "")
@@ -139,7 +145,7 @@ async def on_message(message):
                     await message.channel.send("**Guessed the Word Correctly! You win! **")
                     await message.channel.send("**A new word has been set, play again! **")
             elif mode == "multiplayer":
-                test_word = message.content.replace("w?guess ", "")
+                test_word = message.content.replace(prefix + "guess ", "")
                 if test_word.lower() != word:
                     return_string = check(test_word, word)
                     await message.channel.send(' '.join(return_string), reference=message)
@@ -156,7 +162,7 @@ async def on_message(message):
                         username + " Guessed the Word Correctly! +5 points ")
                     leaderboard[message.author.name] = leaderboard[message.author.name] + 5
 
-    if message.content.startswith('w?end'):
+    if message.content.startswith(prefix + 'end'):
         if mode == "singleplayer":
             reset_vars()
             game = False
@@ -174,20 +180,17 @@ async def on_message(message):
             await message.channel.send(''.join(formatted_msg))
             reset_vars()
 
-    if message.content.startswith("w?wordzwar"):
+    if message.content.startswith(prefix + "wordzwar"):
 
         if name_list != []:
-            await message.channel.send("**Multiplayer war declared! Goodluck!** ")
-            await message.channel.send("**GUESS THE WORD NOW FIRST ONE TO GUESS WINS!!**")
+            await message.channel.send("**Multiplayer war declared! Goodluck!**\n**GUESS THE WORD NOW FIRST ONE TO GUESS WINS!!**")
             mode = "multiplayer"
             game = True
         else:
 
-            await message.channel.send("**Please add more players for a multiplayer game.**")
-            await message.channel.send("**Use `w?add @user` to add them to the game.**")
-            await message.channel.send("**Use `w?wordz` to play a game solo.**")
-    if message.content.startswith("w?add"):
-        stripped_msg = message.content.replace("w?add ", "")
+            await message.channel.send("**Please add more players for a multiplayer game.**\n**Use `w?add @user` to add them to the game.**\n**Use `w?wordz` to play a game solo.**")
+    if message.content.startswith(prefix + "add"):
+        stripped_msg = message.content.replace(prefix + "add ", "")
         name_list.append(stripped_msg)
 
         user_id = message.author.id
