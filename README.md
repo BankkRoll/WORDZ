@@ -12,7 +12,7 @@
 ![ScreenShot](https://github.com/BankkRoll/WORDZ/blob/main/WORDZ1%20(2).png)
 ![ScreenShot](https://github.com/BankkRoll/WORDZ/blob/main/WORDZ1%20(1).png)
 
-**Bot can be invited here -** 
+**Bot can be invited here -** http://wordz-invite.xyz
 ____________________________________________________________________________
 
 * Bot can also be self hosted, below are the secret variables needed.
