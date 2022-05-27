@@ -8,6 +8,7 @@
 
 
 **Ex.** Play a game like wordle-
+
 ![ScreenShot](https://github.com/BankkRoll/WORDZ/blob/main/WORDZ1%20(2).png)
 ![ScreenShot](https://github.com/BankkRoll/WORDZ/blob/main/WORDZ1%20(1).png)
 
