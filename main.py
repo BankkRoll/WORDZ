@@ -140,7 +140,7 @@ Please view my profile and select `ADD TO SERVER`.
     if message.content.startswith(prefix + 'guess'):
         if game:
             if mode == "singleplayer":
-                test_word = message.content.replace("w?guess ", "")
+                test_word = message.content.replace(prefix + "guess ", "")
                 if test_word != word:
                     return_string = check(test_word, word)
                     await message.channel.send(' '.join(return_string), reference=message)
