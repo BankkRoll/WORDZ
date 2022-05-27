@@ -1,3 +1,5 @@
+# WORDZ
+
 * **Wordle in discord anyone?**
 
 * **👋 Thanks for checking out `WORDZ`!**
