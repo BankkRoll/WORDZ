@@ -14,6 +14,7 @@ mode = "singleplayer"
 name_list = []
 leaderboard = {}
 vocab = []
+client = discord.Client()
 
 with open('word_list.txt', "r") as f:
     data = f.read()
@@ -29,7 +30,6 @@ game = False
 word = random.choice(word_list)
 print(word)
 
-client = discord.Client()
 
 
 def check(guess, actual_word):
